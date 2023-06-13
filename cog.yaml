@@ -7,19 +7,12 @@ build:
 
   python_version: '3.8'
 
-  python_packages:
-    - 'ffmpeg-python==0.2.0'
-    - 'torch==1.11.0'
-    - 'torchvision==0.12.0'
-    - 'torchaudio==0.11.0'
-    - 'pyannote.audio==2.1.1'
-    - 'openai-whisper==20230314'
-
   run:
+    - 'pip3 install ffmpeg-python==0.2.0 torch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 pyannote.audio==2.1.1 openai-whisper==20230314'
     - 'wget -O - https://pyannote-speaker-diarization.s3.eu-west-2.amazonaws.com/data-2023-03-25-02.tar.gz | tar xz -C /'
     - 'mkdir /data/whisper'
     - 'wget -P /data/whisper https://huggingface.co/gitnazarov/whisper-medium-uz/resolve/main/pytorch_model.bin'
 
-image: 'r8.im/meronym/speaker-transcription'
+image: 'r8.im/ssvadim/speaker-transcription'
 
 predict: 'predict.py:Predictor'

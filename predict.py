@@ -1,15 +1,7 @@
-"""
-download model weights to /data
-wget -O - https://pyannote-speaker-diarization.s3.eu-west-2.amazonaws.com/data-2023-03-25-02.tar.gz | tar xz -C /
-wget -P /data/whisper https://openaipublic.azureedge.net/main/whisper/models/d7440d1dc186f76616474e0ff0b3b6b879abc9d1a4926b7adfa41db2d497ab4f/medium.en.pt
-"""
-
 import json
 import tempfile
-
 import numpy as np
 import torch
-
 from cog import BasePredictor, Input, Path
 from pyannote.audio import Audio
 from pyannote.audio.pipelines import SpeakerDiarization
@@ -72,7 +64,7 @@ class Predictor(BasePredictor):
         print('transcribing segments...')
         if whisper_prompt:
             print('using prompt:', repr(whisper_prompt))
-        
+
         self.whisper.to("cuda")
         trimmer = Audio(sample_rate=16000, mono=True)
         for seg in segments:
@@ -124,7 +116,6 @@ class Predictor(BasePredictor):
         no_speech_threshold = 0.6
 
         args = {
-            "language": "en",  # this is an English-only model
             "patience": patience,
             "suppress_tokens": suppress_tokens,
             "initial_prompt": initial_prompt,
